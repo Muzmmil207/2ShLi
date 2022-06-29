@@ -1,0 +1,172 @@
+{% extends 'beas.html' %}
+{% block title %}2ShLi | Link Management{% endblock %}
+{% block contener %}
+
+<head>
+    <style>
+        .copy-button:active {
+            background-color: #809ce2;
+        }
+
+        .copy-button::before {
+            content: "coppied";
+            position: absolute;
+            top: -45px;
+            right: 0px;
+            background-color: #5c81dc;
+            padding: 8px 10px;
+            border-radius: 20px;
+            font-size: 15px;
+            display: none;
+        }
+
+        .copy-button::after {
+            content: "";
+            position: absolute;
+            top: -20px;
+            right: 25px;
+            width: 10px;
+            height: 10px;
+            background-color: #5c81dc;
+            transform: rotate(45deg);
+            display: none;
+        }
+
+        .copy-text.active button::before,
+        .copy-text.active button::after {
+            display: block;
+        }
+
+        /*  */
+        .share,
+        .overlay {
+            display: none;
+        }
+
+        .show-share {
+            display: block;
+        }
+    </style>
+
+</head>
+
+{% if user.is_authenticated %}
+{% if user.id == short_url.user.id %}
+<br><br>
+<div class="container bg-white"
+    style="padding-top: 25px; border: 3px rgb(217, 211, 241) solid; border-radius: 5px;  box-shadow: 0 5px 25px rgba(1 1 1 /15%);">
+    <h3>LINK DETAILS</h3>
+    <br>
+    <small><a href="{{short_url.long_url}}">{{short_url.long_url}}</a></small><br>
+    <div class="container">
+        <div class="copy-text"
+            style="position: relative;  background: #fff; border: 1px solid #ddd; border-radius: 10px; display: flex; ">
+            <button class="copy-button"
+                style="width: 20%; height: 100%; padding: 10px 0px; background:#5784f5; color: #fff; border: none; outline: none; border-radius: 10px 0 0px 10px; cursor: pointer; ">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files"
+                    viewBox="0 0 16 16">
+                    <path
+                        d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                </svg>
+            </button>
+            <input type="text" class="text" value="http://127.0.0.1:8000/{{short_url.short_url}}"
+                style=" width: 80%;  margin-left: 15px; font-size: 18px; color: #555;  outline: none; border: none;">
+        </div>
+    </div>
+    <br>
+    <!--     <button class="xx">share</button>
+    <div class="overlay"
+        style="position: absolute; z-index: 0; top:0; left:0%; width: 100%; height: 100vh; background: rgba(0, 0, 0, .5); opacity: 1;">
+    </div>
+    <div class="share" style="position: absolute; left:0; right:0; margin: auto; width: 50%; z-index: 1; padding: 1em;">
+        <h2>Share now</h2>
+        <button>social link</button>
+        <button>social link</button>
+        <button>social link</button>
+    </div> -->
+    <br>
+    <p>create date: {{short_url.link_date}}</p>
+    <hr>
+    <br>
+    <h5>QR Code</h6>
+        <p>Press and hold to share or save the code to your photos</p>
+        <div class="qr-img" style="display: flex; justify-content: center;">
+            <div class="card" style="width: 18rem;">
+                <img src="{{short_url.qr_code.url}}" class="card-img-top">
+                <div class="card-body">
+                    <a href="{{short_url.qr_code.url}}" class="btn btn-primary" download=""><svg
+                            xmlns="http://www.w3.org/2000/svg" style="width: 24px; padding-right:5px;" width="16"
+                            height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+                            <path
+                                d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                            <path
+                                d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                        </svg> Download PNG</a>
+                </div>
+            </div>
+            <div class="img-contener" style="">
+                <div class="download" style=" background-color: #f55757; margin-right: 25%; margin-left: 25%;">
+                </div>
+            </div>
+        </div>
+        <hr>
+        <a href="{% url 'UpdateLink' short_url.pk %}"><svg xmlns="http://www.w3.org/2000/svg" style="padding-right:5px;"
+                width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                <path
+                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
+            </svg>Edit </a>-
+        <a href="{% url 'DeleteLink' short_url.pk %}"><svg xmlns="http://www.w3.org/2000/svg"
+                style="padding-right: 5px;" width="16" height="16" fill="currentColor" class="bi bi-trash-fill"
+                viewBox="0 0 16 16">
+                <path
+                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+            </svg>Delete</a>
+        <br>
+        <hr>
+</div>
+{% else %}
+<h1>Page Not Found</h1>
+<a href=""></a>
+{% endif %}
+
+
+{% else %}
+<h3>PLease <a href="{% url 'login' %}">Login</a> TO Access</h1>
+
+
+    {% endif %}
+    <script>
+        let copytext = document.querySelector(".copy-text");
+        copytext.querySelector('button').addEventListener("click", function () {
+            let input = copytext.querySelector('input.text');
+            input.select();
+            document.execCommand("copy");
+            copytext.classList.add("active");
+            setTimeout(function () {
+                copytext.classList.remove("active");
+
+            }, 1500);
+        });
+        /*  */
+        const shareButton = document.querySelector('.xx');
+        const overlay = document.querySelector('.overlay');
+        const shareModal = document.querySelector('.share');
+
+        const title = window.document.title;
+        const url = window.document.location.href;
+
+        shareButton.addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: '${title}',
+                    url: '${url}'
+                }).then(() => {
+                    console.log('thanks you for sharing');
+                })
+            } else {
+                overlay.classList.add('show-share');
+                shareModal.classList.add('show-share');
+            }
+        })
+    </script>
+    {% endblock %}

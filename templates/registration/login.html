@@ -1,0 +1,18 @@
+{% extends 'beas.html' %}
+{% block title %}2ShLI | Login{% endblock %}
+
+{% block contener %}
+<section style="width: 100%; height: 80vh;">
+    <br><br><br>
+    <div class="container bg-white" style="padding-top: 25px; border: 1px rgb(217, 211, 241) solid; border-radius: 5px;  box-shadow: 0 5px 25px rgba(1 1 1 /20%);">
+        <br>
+        <form class="form-inline my-2 my-lg-0" method="POST">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+        </form>
+        <br><br>
+    </div>
+</section>
+
+{% endblock %}

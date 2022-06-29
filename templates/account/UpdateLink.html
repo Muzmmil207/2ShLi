@@ -1,0 +1,31 @@
+{% extends 'beas.html' %}
+{% block title %}2ShLi | Update Link {% endblock %}
+{% block contener %}
+<section style="width: 100%; height: 100vh; ">
+    <br>
+    {% if user.is_authenticated %}
+    {% if user.id == short_url.user.id %}
+    <div class="container bg-white"
+        style="padding-top: 25px; border: 3px rgb(217, 211, 241) solid; border-radius: 5px;  box-shadow: 0 5px 25px rgba(1 1 1 /15%);">
+        <br>
+        <br>
+        <div class="form-group">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p}}
+                <button type="submit" class="btn btn-dark">save</button>
+            </form>
+            <br>
+            <br>
+        </div>
+    </div>
+    {% else %}
+    <h1>Page Not Found</h1>
+    {% endif%}
+
+    {% else %}
+    <h1>please login to acsis</h1>
+    {% endif %}
+</section>
+
+{% endblock %}

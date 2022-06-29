@@ -1,0 +1,20 @@
+{% extends 'beas.html' %}
+
+{% block contener %}
+<br>
+<br>{% if user.is_authenticated %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p}}
+    <button type="submit">save</button>
+</form>
+<br>
+<input type="text" value="127.0.0.1:8000/{{ a }} ">
+<br>
+<!-- <img src="{{img.qr_code.url}}" alt=""> -->
+{% else %}
+<strong>please login to acsis</strong>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'beas.html' %}
+{% block title %}2ShLi | Create Link{% endblock %}
+
+{% block contener %}
+<section style="width: 100%; height: 100vh;">
+    {% if user.is_authenticated %}
+    <br>
+    <br>
+    <div class="container bg-white" style="padding-top: 25px; border: 3px rgb(217, 211, 241) solid; border-radius: 20px;  box-shadow: 0 5px 25px rgba(1 1 1 /15%);
+    ">
+        <div class="form-group">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p}}
+                <button type="submit" class="btn btn-primary" style="border: 2px black solid;">SHORTENING</button>
+            </form>
+            <br>
+            <br>
+        </div>
+    </div>
+    {% else %}
+    <h5>PLease <a href="{% url 'login' %}">Login</a> TO Access</h1>
+        {% endif %}
+</section>
+<script>
+    var name = "{{ user.id }}";
+    document.getElementById("elder").value = name;
+</script>
+
+{% endblock %}
