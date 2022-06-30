@@ -22,7 +22,7 @@ class short_url(models.Model):
         return str(self.long_url)
 
     def save(self, *args, **kwargs):
-        qrcode_img = qrcode.make('http://127.0.0.1:8000/' + self.short_url)
+        qrcode_img = qrcode.make('shli2.herokuapp' + self.short_url)
         canvas = Image.new('RGB', (350, 350), 'white')
         draw = ImageDraw.Draw(canvas)
         canvas.paste(qrcode_img)

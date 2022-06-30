@@ -18,7 +18,7 @@ class UrlForm(forms.ModelForm):
 
         widgets = {
             'short_url': forms.TextInput(attrs={'class': 'form-control'}),
-            'user': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'elder', 'hidden': ''}),
+            'user': forms.TextInput(attrs={'class': 'form-control', 'value': '', 'id': 'elder', 'type': 'hidden'}),
             # 'user': forms.Select(attrs={'class': 'form-control'}),
         }
 
